@@ -1,0 +1,30 @@
+---
+title: "DATA 607 - Project 2 - Codebase"
+author: "Kailot C. Harris"
+date: "2026/10/08"
+format:
+  html:
+    code-overflow: wrap
+editor: visual
+theme:
+  dark: darkly
+  light: flatly
+---
+
+# Introduction and Overview
+
+The primary objective of this process is to transform three independent, wide data sets into formats ready for downstream analysis. Wide data sets are retrieved as .CSV files. The three selected data sets include synthetic Business Cost and Revenue data, 2022 US Census data, and World Bank Life Expectancy data. Each data set, after import, will be tidied according to standard conventions. Certain aspects of each data set will be analyzed: from the World Bank Data, rates of life expectancy across regions could be compared, while the US Census data could be analyzed for
+
+# Approach
+
+1.  Import each data set
+2.  Tidy each data set
+3.  Analyze each data set
+4.  Visualize each data set
+5.  Present findings and recommendations for each data set
+
+# Data Import 1
+
+```{r}
+
+```
