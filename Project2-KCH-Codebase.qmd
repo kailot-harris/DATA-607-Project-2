@@ -4,6 +4,8 @@ author: "Kailot C. Harris"
 date: "2026/10/08"
 format:
   html:
+    toc: true
+    code-fold: true
     code-overflow: wrap
 editor: visual
 theme:
@@ -27,6 +29,14 @@ Anticipated challenges include initial import of unwieldy .CSV files. For instan
 
 # Codebase
 
+```{r packages}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(tidyverse)
+```
+
 ## Data Import
 
 ### Data Sources
@@ -34,6 +44,10 @@ Anticipated challenges include initial import of unwieldy .CSV files. For instan
 Data set 1 (2022 US Census data) was sourced from a discussion board post by [Anastasiia Gmyrina](https://brightspace.cuny.edu/d2l/le/1344368/discussions/threads/5805589/View). Data set 2 (Business Costs Revenue data) was sourced from a discussion board post by [Jocelyn Slater](https://brightspace.cuny.edu/d2l/le/1344368/discussions/threads/5777654/View). Data set 3 (World Bank Life Expectancy data) was sourced from a discussion board post by [Ummay Rukiya](https://brightspace.cuny.edu/d2l/le/1344368/discussions/threads/5847178/View).
 
 ```{r data-import}
+#| echo: true
+#| warning: false
+#| message: false
+
 url_1 <- "https://raw.githubusercontent.com/kailot-harris/DATA-607-Project-2/refs/heads/main/data/census_top10_states_2022_untidy.csv"
 
 url_2 <- "https://raw.githubusercontent.com/kailot-harris/DATA-607-Project-2/refs/heads/main/data/5A_BusinessCostsRevenue.csv"
@@ -63,8 +77,6 @@ csv_data_3b <- readr::read_csv(file = url_3b,
 csv_data_3c <- readr::read_csv(file = url_3c, 
                                show_col_types = FALSE,
                                progress = FALSE)
-
-glimpse(csv_data_1)
 ```
 
 ## Data structure before tidying
