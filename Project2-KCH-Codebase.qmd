@@ -15,6 +15,8 @@ theme:
 
 The primary objective of this process is to transform three independent, wide data sets into formats ready for downstream analysis. Wide data sets are retrieved as .CSV files. The three selected data sets include synthetic Business Cost and Revenue data, 2022 US Census data, and World Bank Life Expectancy data. Each data set, after import, will be tidied according to standard conventions. Certain aspects of each data set will be analyzed: from the World Bank Data, rates of life expectancy across regions could be compared, while the US Census data could be analyzed for population growth momentum, and cost and revenue temporal trends could be determined for the business data set.
 
+Anticipated challenges include initial import of unwieldy .CSV files. For instance, some may have header text that must be ignored when importing. Additionally, the World Bank data is separated into three distinct .CSV files, so joining these sets together as data frames may be necessary.
+
 # Approach
 
 1.  Import each data set
@@ -24,6 +26,10 @@ The primary objective of this process is to transform three independent, wide da
 5.  Present findings and recommendations for each data set
 
 # Data Import
+
+## Data Sources
+
+Data set 1 (2022 US Census data) was sourced from a discussion board post by [Anastasiia Gmyrina](https://brightspace.cuny.edu/d2l/le/1344368/discussions/threads/5805589/View). Data set 2 (Business Costs Revenue data) was sourced from a discussion board post by [Jocelyn Slater](https://brightspace.cuny.edu/d2l/le/1344368/discussions/threads/5777654/View). Data set 3 (World Bank Life Expectancy data) was sourced from a discussion board post by [Ummay Rukiya](https://brightspace.cuny.edu/d2l/le/1344368/discussions/threads/5847178/View).
 
 ```{r data-import}
 url_1 <- "https://raw.githubusercontent.com/kailot-harris/DATA-607-Project-2/refs/heads/main/data/census_top10_states_2022_untidy.csv"
@@ -58,3 +64,21 @@ csv_data_3c <- readr::read_csv(file = url_3c,
 
 glimpse(csv_data_1)
 ```
+
+## Data structure before tidying
+
+### Column Names
+
+### Row Count
+
+### Representative Sample
+
+# Data Transformation
+
+### Commented, executable code with explanations for each decision
+
+# Analysis
+
+### Description of the statistical or summarization approach
+
+# Conclusions
