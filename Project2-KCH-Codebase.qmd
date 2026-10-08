@@ -25,9 +25,11 @@ Anticipated challenges include initial import of unwieldy .CSV files. For instan
 4.  Visualize each data set
 5.  Present findings and recommendations for each data set
 
-# Data Import
+# Codebase
 
-## Data Sources
+## Data Import
+
+### Data Sources
 
 Data set 1 (2022 US Census data) was sourced from a discussion board post by [Anastasiia Gmyrina](https://brightspace.cuny.edu/d2l/le/1344368/discussions/threads/5805589/View). Data set 2 (Business Costs Revenue data) was sourced from a discussion board post by [Jocelyn Slater](https://brightspace.cuny.edu/d2l/le/1344368/discussions/threads/5777654/View). Data set 3 (World Bank Life Expectancy data) was sourced from a discussion board post by [Ummay Rukiya](https://brightspace.cuny.edu/d2l/le/1344368/discussions/threads/5847178/View).
 
