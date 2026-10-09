@@ -187,12 +187,32 @@ knitr::kable(csv_data_3c[1:1, 1:2])
 
 ```
 
-# Data Transformation
+## Data Transformation
+
+The raw .CSV data for data set 1 is transformed initially by cleaning the names, renaming a few columns, and removing the `rank` column. This column was removed because it provided a numerical rank that would be rendered meaningless during the subsequent transformation: the frame is pivoted longer and a new date column is created to capture the old variable names.
+
+```{r transform-1}
+df_1 <- csv_data_1 |>
+  janitor::clean_names() |>                               # clean names
+  rename(area = geographic_area,                          # rename area
+         april_1_2020 = april_1_2020_estimates_base) |>   # rename april_1
+  select(-rank)                                           # remove rank column
+
+df_1b <- df_1 |>
+  pivot_longer(            
+    cols = 2:4,                                           # columns to pivot
+    names_to = "dates",                                   # names become dates
+    values_to = "count"                                   # values become count
+  ) |>
+  mutate(dates = mdy(dates))                              # dates reformatted
+
+knitr::kable(head(df_1b))
+```
 
 ### Commented, executable code with explanations for each decision
 
-# Analysis
+## Analysis
 
 ### Description of the statistical or summarization approach
 
-# Conclusions
+## Conclusions

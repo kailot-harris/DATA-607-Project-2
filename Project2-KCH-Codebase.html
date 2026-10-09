@@ -265,7 +265,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#row-count" id="toc-row-count" class="nav-link" data-scroll-target="#row-count">Row Count</a></li>
   <li><a href="#representative-sample" id="toc-representative-sample" class="nav-link" data-scroll-target="#representative-sample">Representative Sample</a></li>
   </ul></li>
-  </ul></li>
   <li><a href="#data-transformation" id="toc-data-transformation" class="nav-link" data-scroll-target="#data-transformation">Data Transformation</a>
   <ul class="collapse">
   <li><a href="#commented-executable-code-with-explanations-for-each-decision" id="toc-commented-executable-code-with-explanations-for-each-decision" class="nav-link" data-scroll-target="#commented-executable-code-with-explanations-for-each-decision">Commented, executable code with explanations for each decision</a></li>
@@ -275,6 +274,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#description-of-the-statistical-or-summarization-approach" id="toc-description-of-the-statistical-or-summarization-approach" class="nav-link" data-scroll-target="#description-of-the-statistical-or-summarization-approach">Description of the statistical or summarization approach</a></li>
   </ul></li>
   <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -333,7 +333,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="data-import">Data Import</h2>
 <section id="data-sources" class="level3">
 <h3 class="anchored" data-anchor-id="data-sources">Data Sources</h3>
-<p>Data set 1 (2022 US Census data) was sourced from a discussion board post by <a href="https://brightspace.cuny.edu/d2l/le/1344368/discussions/threads/5805589/View">Anastasiia Gmyrina</a>. Data set 2 (Business Costs Revenue data) was sourced from a discussion board post by <a href="https://brightspace.cuny.edu/d2l/le/1344368/discussions/threads/5777654/View">Jocelyn Slater</a>. Data set 3 (World Bank Life Expectancy data) was sourced from a discussion board post by <a href="https://brightspace.cuny.edu/d2l/le/1344368/discussions/threads/5847178/View">Ummay Rukiya</a>.</p>
+<p>Data set 1 (2022 US Census data) was sourced from a discussion board post by <a href="https://brightspace.cuny.edu/d2l/le/1344368/discussions/threads/5805589/View">Anastasiia Gmyrina</a>. Data set 2 (Business Costs Revenue data) was sourced from a discussion board post by <a href="https://brightspace.cuny.edu/d2l/le/1344368/discussions/threads/5777654/View">Jocelyn Slater</a>. Data set 3 (World Bank Life Expectancy data) was sourced from a discussion board post by <a href="https://brightspace.cuny.edu/d2l/le/1344368/discussions/threads/5847178/View">Ummay Rukiya</a>. Data set 3 requires multiple imports for multiple .CSV files, and certain files have header information that requires skipping those rows.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -357,15 +357,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>csv_data_3a <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="at">file =</span> url_3a, </span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>                               <span class="at">show_col_types =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>                               <span class="at">progress =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>csv_data_3b <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="at">file =</span> url_3b, </span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>                               <span class="at">show_col_types =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>                               <span class="at">progress =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>csv_data_3c <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="at">file =</span> url_3c, </span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>                               <span class="at">show_col_types =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>                               <span class="at">progress =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>                               <span class="at">skip =</span> <span class="dv">4</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>                               <span class="at">progress =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>csv_data_3b <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="at">file =</span> url_3b, </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>                               <span class="at">show_col_types =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>                               <span class="at">skip =</span> <span class="dv">0</span>,</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>                               <span class="at">progress =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>csv_data_3c <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="at">file =</span> url_3c, </span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>                               <span class="at">show_col_types =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>                               <span class="at">skip =</span> <span class="dv">0</span>,</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>                               <span class="at">progress =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -374,29 +377,528 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="data-structure-before-tidying">Data structure before tidying</h2>
 <section id="column-names" class="level3">
 <h3 class="anchored" data-anchor-id="column-names">Column Names</h3>
+<p>There are 5 column names for data set 1, displayed below:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(csv_data_1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Rank"                           "Geographic Area"               
+[3] "April 1, 2020 (Estimates Base)" "July 1, 2021"                  
+[5] "July 1, 2022"                  </code></pre>
+</div>
+</div>
+<p>There are 134 column names for data set 2, displayed below:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(csv_data_2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Location"       "Name"           "Jan Cost"       "Jan Revenue"   
+ [5] "Feb Cost (k)"   "Feb Revenue"    "March Cost (k)" "March Revenue" 
+ [9] "April_Cost"     "April_revenue"  "May Cost"       "may revenue"   
+[13] "June Cost"      "June Revenue"  </code></pre>
+</div>
+</div>
+<p>There are 71 column names in the first .CSV file for data set 3. The first 6 are displayed below:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">names</span>(csv_data_3a),<span class="dv">6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Country Name"   "Country Code"   "Indicator Name" "Indicator Code"
+[5] "1960"           "1961"          </code></pre>
+</div>
+</div>
+<p>There are 6 column names in the second .CSV file for data set 3, displayed below:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(csv_data_3b)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Country Code" "Region"       "IncomeGroup"  "SpecialNotes" "TableName"   
+[6] "...6"        </code></pre>
+</div>
+</div>
+<p>There are 5 column names in the third .CSV file for data set 3, displayed below:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(csv_data_3c)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "INDICATOR_CODE"      "INDICATOR_NAME"      "SOURCE_NOTE"        
+[4] "SOURCE_ORGANIZATION" "...5"               </code></pre>
+</div>
+</div>
 </section>
 <section id="row-count" class="level3">
 <h3 class="anchored" data-anchor-id="row-count">Row Count</h3>
+<p>There are 10 rows for data set 1:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(csv_data_1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10</code></pre>
+</div>
+</div>
+<p>There are 5 rows for data set 2:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(csv_data_2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+</div>
+<p>There are 265 rows in the first .CSV file of data set 3:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(csv_data_3a)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 265</code></pre>
+</div>
+</div>
+<p>There are 264 rows in the second .CSV file of data set 3:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(csv_data_3b)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 264</code></pre>
+</div>
+</div>
+<p>There is only 1 row in the third .CSV file for data set 3:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(csv_data_3c)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+</div>
 </section>
 <section id="representative-sample" class="level3">
 <h3 class="anchored" data-anchor-id="representative-sample">Representative Sample</h3>
+<p>The first 9 rows for the 5 columns from data set 1 are displayed below:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(csv_data_1,<span class="dv">9</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 20%">
+<col style="width: 39%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Rank</th>
+<th style="text-align: left;">Geographic Area</th>
+<th style="text-align: right;">April 1, 2020 (Estimates Base)</th>
+<th style="text-align: right;">July 1, 2021</th>
+<th style="text-align: right;">July 1, 2022</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">California</td>
+<td style="text-align: right;">39538245</td>
+<td style="text-align: right;">39142991</td>
+<td style="text-align: right;">39029342</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Texas</td>
+<td style="text-align: right;">29145428</td>
+<td style="text-align: right;">29558864</td>
+<td style="text-align: right;">30029572</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Florida</td>
+<td style="text-align: right;">21538226</td>
+<td style="text-align: right;">21828069</td>
+<td style="text-align: right;">22244823</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">New York</td>
+<td style="text-align: right;">20201230</td>
+<td style="text-align: right;">19857492</td>
+<td style="text-align: right;">19677151</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">Pennsylvania</td>
+<td style="text-align: right;">13002689</td>
+<td style="text-align: right;">13012059</td>
+<td style="text-align: right;">12972008</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">Illinois</td>
+<td style="text-align: right;">12812545</td>
+<td style="text-align: right;">12686469</td>
+<td style="text-align: right;">12582032</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">Ohio</td>
+<td style="text-align: right;">11799374</td>
+<td style="text-align: right;">11764342</td>
+<td style="text-align: right;">11756058</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">Georgia</td>
+<td style="text-align: right;">10711937</td>
+<td style="text-align: right;">10788029</td>
+<td style="text-align: right;">10912876</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">North Carolina</td>
+<td style="text-align: right;">10439414</td>
+<td style="text-align: right;">10565885</td>
+<td style="text-align: right;">10698973</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The first 5 rows of the first 5 columns of data set 2 are displayed below:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(csv_data_2[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Location</th>
+<th style="text-align: left;">Name</th>
+<th style="text-align: right;">Jan Cost</th>
+<th style="text-align: right;">Jan Revenue</th>
+<th style="text-align: right;">Feb Cost (k)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Boston</td>
+<td style="text-align: left;">Bobby</td>
+<td style="text-align: right;">29000</td>
+<td style="text-align: right;">50000</td>
+<td style="text-align: right;">50.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Chicago</td>
+<td style="text-align: left;">Denise</td>
+<td style="text-align: right;">41000</td>
+<td style="text-align: right;">45000</td>
+<td style="text-align: right;">50.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LA</td>
+<td style="text-align: left;">Ethan</td>
+<td style="text-align: right;">30500</td>
+<td style="text-align: right;">39000</td>
+<td style="text-align: right;">31.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">New York</td>
+<td style="text-align: left;">April</td>
+<td style="text-align: right;">19000</td>
+<td style="text-align: right;">31500</td>
+<td style="text-align: right;">22.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dallas</td>
+<td style="text-align: left;">Emma</td>
+<td style="text-align: right;">38000</td>
+<td style="text-align: right;">42000</td>
+<td style="text-align: right;">16.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The first 9 rows of the first 4 columns of the first .CSV file from data set 3 are displayed below:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(csv_data_3a[<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 13%">
+<col style="width: 41%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Country Name</th>
+<th style="text-align: left;">Country Code</th>
+<th style="text-align: left;">Indicator Name</th>
+<th style="text-align: left;">Indicator Code</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Aruba</td>
+<td style="text-align: left;">ABW</td>
+<td style="text-align: left;">Life expectancy at birth, total (years)</td>
+<td style="text-align: left;">SP.DYN.LE00.IN</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Africa Eastern and Southern</td>
+<td style="text-align: left;">AFE</td>
+<td style="text-align: left;">Life expectancy at birth, total (years)</td>
+<td style="text-align: left;">SP.DYN.LE00.IN</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Afghanistan</td>
+<td style="text-align: left;">AFG</td>
+<td style="text-align: left;">Life expectancy at birth, total (years)</td>
+<td style="text-align: left;">SP.DYN.LE00.IN</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Africa Western and Central</td>
+<td style="text-align: left;">AFW</td>
+<td style="text-align: left;">Life expectancy at birth, total (years)</td>
+<td style="text-align: left;">SP.DYN.LE00.IN</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Angola</td>
+<td style="text-align: left;">AGO</td>
+<td style="text-align: left;">Life expectancy at birth, total (years)</td>
+<td style="text-align: left;">SP.DYN.LE00.IN</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Albania</td>
+<td style="text-align: left;">ALB</td>
+<td style="text-align: left;">Life expectancy at birth, total (years)</td>
+<td style="text-align: left;">SP.DYN.LE00.IN</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Andorra</td>
+<td style="text-align: left;">AND</td>
+<td style="text-align: left;">Life expectancy at birth, total (years)</td>
+<td style="text-align: left;">SP.DYN.LE00.IN</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Arab World</td>
+<td style="text-align: left;">ARB</td>
+<td style="text-align: left;">Life expectancy at birth, total (years)</td>
+<td style="text-align: left;">SP.DYN.LE00.IN</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">United Arab Emirates</td>
+<td style="text-align: left;">ARE</td>
+<td style="text-align: left;">Life expectancy at birth, total (years)</td>
+<td style="text-align: left;">SP.DYN.LE00.IN</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The first 6 rows of 5 of the 6 columns of the second .CSV file from data set 3 are displayed below. One of the columns was removed prior to sampling because it contained new-line characters (e.g.&nbsp;“\n”), causing the knitr table to crash when displaying. This column removal was accomplished by selecting all columns but the problematic ‘SpecialNotes’ column.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>csv_data_3b <span class="sc">|&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>SpecialNotes) <span class="sc">|&gt;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>() <span class="sc">|&gt;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 29%">
+<col style="width: 21%">
+<col style="width: 30%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Country Code</th>
+<th style="text-align: left;">Region</th>
+<th style="text-align: left;">IncomeGroup</th>
+<th style="text-align: left;">TableName</th>
+<th style="text-align: left;">…6</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ABW</td>
+<td style="text-align: left;">Latin America &amp; Caribbean</td>
+<td style="text-align: left;">High income</td>
+<td style="text-align: left;">Aruba</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AFE</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Africa Eastern and Southern</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AFG</td>
+<td style="text-align: left;">Middle East &amp; North Africa</td>
+<td style="text-align: left;">Low income</td>
+<td style="text-align: left;">Afghanistan</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AFW</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Africa Western and Central</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AGO</td>
+<td style="text-align: left;">Sub-Saharan Africa</td>
+<td style="text-align: left;">Lower middle income</td>
+<td style="text-align: left;">Angola</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ALB</td>
+<td style="text-align: left;">Europe &amp; Central Asia</td>
+<td style="text-align: left;">Upper middle income</td>
+<td style="text-align: left;">Albania</td>
+<td style="text-align: left;">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The only row of the first 2 columns of the third .CSV file from data set 3 are displayed below. The remaining columns contained new-line characters (e.g.&nbsp;“\n”), causing the knitr table to crash when displaying.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(csv_data_3c[<span class="dv">1</span><span class="sc">:</span><span class="dv">1</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">INDICATOR_CODE</th>
+<th style="text-align: left;">INDICATOR_NAME</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">SP.DYN.LE00.IN</td>
+<td style="text-align: left;">Life expectancy at birth, total (years)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </section>
 </section>
-</section>
-<section id="data-transformation" class="level1">
-<h1>Data Transformation</h1>
+<section id="data-transformation" class="level2">
+<h2 class="anchored" data-anchor-id="data-transformation">Data Transformation</h2>
+<p>The raw .CSV data for data set 1 is transformed initially by cleaning the names, renaming a few columns, and removing the <code>rank</code> column. This column was removed because it provided a numerical rank that would be rendered meaningless during the subsequent transformation: the frame is pivoted longer and a new date column is created to capture the old variable names.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df_1 <span class="ot">&lt;-</span> csv_data_1 <span class="sc">|&gt;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">|&gt;</span>                               <span class="co"># clean names</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">area =</span> geographic_area,                          <span class="co"># rename area</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">april_1_2020 =</span> april_1_2020_estimates_base) <span class="sc">|&gt;</span>   <span class="co"># rename april_1</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>rank)                                           <span class="co"># remove rank column</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>df_1b <span class="ot">&lt;-</span> df_1 <span class="sc">|&gt;</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(            </span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>,                                           <span class="co"># columns to pivot</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"dates"</span>,                                   <span class="co"># names become dates</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"count"</span>                                   <span class="co"># values become count</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dates =</span> <span class="fu">mdy</span>(dates))                              <span class="co"># dates reformatted</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(df_1b))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">area</th>
+<th style="text-align: left;">dates</th>
+<th style="text-align: right;">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">California</td>
+<td style="text-align: left;">2020-04-01</td>
+<td style="text-align: right;">39538245</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">California</td>
+<td style="text-align: left;">2021-07-01</td>
+<td style="text-align: right;">39142991</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">California</td>
+<td style="text-align: left;">2022-07-01</td>
+<td style="text-align: right;">39029342</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Texas</td>
+<td style="text-align: left;">2020-04-01</td>
+<td style="text-align: right;">29145428</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Texas</td>
+<td style="text-align: left;">2021-07-01</td>
+<td style="text-align: right;">29558864</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Texas</td>
+<td style="text-align: left;">2022-07-01</td>
+<td style="text-align: right;">30029572</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <section id="commented-executable-code-with-explanations-for-each-decision" class="level3">
 <h3 class="anchored" data-anchor-id="commented-executable-code-with-explanations-for-each-decision">Commented, executable code with explanations for each decision</h3>
 </section>
 </section>
-<section id="analysis" class="level1">
-<h1>Analysis</h1>
+<section id="analysis" class="level2">
+<h2 class="anchored" data-anchor-id="analysis">Analysis</h2>
 <section id="description-of-the-statistical-or-summarization-approach" class="level3">
 <h3 class="anchored" data-anchor-id="description-of-the-statistical-or-summarization-approach">Description of the statistical or summarization approach</h3>
 </section>
 </section>
-<section id="conclusions" class="level1">
-<h1>Conclusions</h1>
+<section id="conclusions" class="level2">
+<h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
+</section>
 </section>
 
 </main>
