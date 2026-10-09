@@ -41,7 +41,7 @@ library(tidyverse)
 
 ### Data Sources
 
-Data set 1 (2022 US Census data) was sourced from a discussion board post by [Anastasiia Gmyrina](https://brightspace.cuny.edu/d2l/le/1344368/discussions/threads/5805589/View). Data set 2 (Business Costs Revenue data) was sourced from a discussion board post by [Jocelyn Slater](https://brightspace.cuny.edu/d2l/le/1344368/discussions/threads/5777654/View). Data set 3 (World Bank Life Expectancy data) was sourced from a discussion board post by [Ummay Rukiya](https://brightspace.cuny.edu/d2l/le/1344368/discussions/threads/5847178/View).
+Data set 1 (2022 US Census data) was sourced from a discussion board post by [Anastasiia Gmyrina](https://brightspace.cuny.edu/d2l/le/1344368/discussions/threads/5805589/View). Data set 2 (Business Costs Revenue data) was sourced from a discussion board post by [Jocelyn Slater](https://brightspace.cuny.edu/d2l/le/1344368/discussions/threads/5777654/View). Data set 3 (World Bank Life Expectancy data) was sourced from a discussion board post by [Ummay Rukiya](https://brightspace.cuny.edu/d2l/le/1344368/discussions/threads/5847178/View). Data set 3 requires multiple imports for multiple .CSV files, and certain files have header information that requires skipping those rows.
 
 ```{r data-import}
 #| echo: true
@@ -68,14 +68,17 @@ csv_data_2 <- readr::read_csv(file = url_2,
 
 csv_data_3a <- readr::read_csv(file = url_3a, 
                                show_col_types = FALSE,
+                               skip = 4,
                                progress = FALSE)
 
 csv_data_3b <- readr::read_csv(file = url_3b, 
                                show_col_types = FALSE,
+                               skip = 0,
                                progress = FALSE)
 
 csv_data_3c <- readr::read_csv(file = url_3c, 
                                show_col_types = FALSE,
+                               skip = 0,
                                progress = FALSE)
 ```
 
@@ -83,9 +86,106 @@ csv_data_3c <- readr::read_csv(file = url_3c,
 
 ### Column Names
 
+There are 5 column names for data set 1, displayed below:
+
+```{r column-names-1}
+names(csv_data_1)
+```
+
+There are 134 column names for data set 2, displayed below:
+
+```{r column-names-2}
+names(csv_data_2)
+
+```
+
+There are 71 column names in the first .CSV file for data set 3. The first 6 are displayed below:
+
+```{r column-names-3a}
+head(names(csv_data_3a),6)
+```
+
+There are 6 column names in the second .CSV file for data set 3, displayed below:
+
+```{r column-names-3b}
+names(csv_data_3b)
+```
+
+There are 5 column names in the third .CSV file for data set 3, displayed below:
+
+```{r column-names-3c}
+names(csv_data_3c)
+```
+
 ### Row Count
 
+There are 10 rows for data set 1:
+
+```{r row-num-1}
+nrow(csv_data_1)
+```
+
+There are 5 rows for data set 2:
+
+```{r row-num-2}
+nrow(csv_data_2)
+```
+
+There are 265 rows in the first .CSV file of data set 3:
+
+```{r row-num-3a}
+nrow(csv_data_3a)
+```
+
+There are 264 rows in the second .CSV file of data set 3:
+
+```{r row-num-3b}
+nrow(csv_data_3b)
+```
+
+There is only 1 row in the third .CSV file for data set 3:
+
+```{r row-num-3c}
+nrow(csv_data_3c)
+```
+
 ### Representative Sample
+
+The first 9 rows for the 5 columns from data set 1 are displayed below:
+
+```{r rep-samp-1}
+knitr::kable(head(csv_data_1,9))
+```
+
+The first 5 rows of the first 5 columns of data set 2 are displayed below:
+
+```{r rep-samp-2}
+knitr::kable(csv_data_2[1:5, 1:5])
+```
+
+The first 9 rows of the first 4 columns of the first .CSV file from data set 3 are displayed below:
+
+```{r rep-samp-3a}
+knitr::kable(csv_data_3a[1:9, 1:4])
+```
+
+The first 6 rows of 5 of the 6 columns of the second .CSV file from data set 3 are displayed below. One of the columns was removed prior to sampling because it contained new-line characters (e.g. "\\n"), causing the knitr table to crash when displaying. This column removal was accomplished by selecting all columns but the problematic 'SpecialNotes' column.
+
+```{r rep-samp-3b}
+csv_data_3b |>
+  select(-SpecialNotes) |>
+  head() |>
+  knitr::kable()
+
+```
+
+The only row of the first 2 columns of the third .CSV file from data set 3 are displayed below. The remaining columns contained new-line characters (e.g. "\\n"), causing the knitr table to crash when displaying.
+
+```{r rep-samp-3c}
+knitr::kable(csv_data_3c[1:1, 1:2])
+  
+
+```
 
 # Data Transformation
 
