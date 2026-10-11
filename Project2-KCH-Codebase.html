@@ -265,15 +265,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#row-count" id="toc-row-count" class="nav-link" data-scroll-target="#row-count">Row Count</a></li>
   <li><a href="#representative-sample" id="toc-representative-sample" class="nav-link" data-scroll-target="#representative-sample">Representative Sample</a></li>
   </ul></li>
-  <li><a href="#data-transformation" id="toc-data-transformation" class="nav-link" data-scroll-target="#data-transformation">Data Transformation</a>
-  <ul class="collapse">
-  <li><a href="#commented-executable-code-with-explanations-for-each-decision" id="toc-commented-executable-code-with-explanations-for-each-decision" class="nav-link" data-scroll-target="#commented-executable-code-with-explanations-for-each-decision">Commented, executable code with explanations for each decision</a></li>
-  </ul></li>
+  <li><a href="#data-transformation" id="toc-data-transformation" class="nav-link" data-scroll-target="#data-transformation">Data Transformation</a></li>
   <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis">Analysis</a>
   <ul class="collapse">
-  <li><a href="#description-of-the-statistical-or-summarization-approach" id="toc-description-of-the-statistical-or-summarization-approach" class="nav-link" data-scroll-target="#description-of-the-statistical-or-summarization-approach">Description of the statistical or summarization approach</a></li>
+  <li><a href="#data-set-1-us-census-data-2022" id="toc-data-set-1-us-census-data-2022" class="nav-link" data-scroll-target="#data-set-1-us-census-data-2022">Data set 1: US Census Data 2022</a></li>
+  <li><a href="#data-set-2-2026-business-performance" id="toc-data-set-2-2026-business-performance" class="nav-link" data-scroll-target="#data-set-2-2026-business-performance">Data set 2: 2026 Business Performance</a></li>
+  <li><a href="#data-set-3-world-bank-life-expectancy" id="toc-data-set-3-world-bank-life-expectancy" class="nav-link" data-scroll-target="#data-set-3-world-bank-life-expectancy">Data set 3: World Bank Life Expectancy</a></li>
   </ul></li>
-  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
+  <li><a href="#findings-and-recommendations" id="toc-findings-and-recommendations" class="nav-link" data-scroll-target="#findings-and-recommendations">Findings and Recommendations</a>
+  <ul class="collapse">
+  <li><a href="#data-set-1-us-census" id="toc-data-set-1-us-census" class="nav-link" data-scroll-target="#data-set-1-us-census">Data set 1 (US Census)</a></li>
+  <li><a href="#data-set-2-2026-business-performance-1" id="toc-data-set-2-2026-business-performance-1" class="nav-link" data-scroll-target="#data-set-2-2026-business-performance-1">Data set 2 (2026 Business Performance)</a></li>
+  <li><a href="#data-set-3-world-bank-life-expectancy-1" id="toc-data-set-3-world-bank-life-expectancy-1" class="nav-link" data-scroll-target="#data-set-3-world-bank-life-expectancy-1">Data set 3 (World Bank Life Expectancy</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -840,15 +844,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dates =</span> <span class="fu">mdy</span>(dates))                              <span class="co"># dates reformatted</span></span>
 <span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(df_1b))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>df_1c <span class="ot">&lt;-</span> df_1b <span class="sc">|&gt;</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(dates) <span class="sc">|&gt;</span>                                      <span class="co"># group by dates</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span> (<span class="at">total =</span> <span class="fu">sum</span>(count, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),               <span class="co"># sum across dates</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">prop =</span> count<span class="sc">/</span>total,                             <span class="co"># calc proportion</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">months =</span> <span class="fu">interval</span>(<span class="fu">ymd</span>(<span class="st">"2020-04-01"</span>),dates) <span class="sc">/</span> <span class="fu">months</span>(<span class="dv">1</span>)  <span class="co"># define months since estimate base</span></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>df_1d <span class="ot">&lt;-</span> df_1c <span class="sc">|&gt;</span></span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(area) <span class="sc">|&gt;</span>                                       <span class="co"># group by area</span></span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(dates, <span class="at">.by_group =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span>                     <span class="co"># arrange by date within group</span></span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">count_growth =</span> (count<span class="sc">-</span><span class="fu">lag</span>(count))<span class="sc">/</span>(months<span class="sc">-</span><span class="fu">lag</span>(months))<span class="sc">/</span><span class="dv">1000</span>, <span class="co"># Thousands of pop growth/month</span></span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">prop_growth =</span> (prop<span class="sc">-</span><span class="fu">lag</span>(prop))<span class="sc">/</span>(months<span class="sc">-</span><span class="fu">lag</span>(months))<span class="sc">*</span><span class="dv">100</span>      <span class="co"># Prop growth %age</span></span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(df_1d))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 10%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 8%">
+<col style="width: 15%">
+<col style="width: 14%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">area</th>
 <th style="text-align: left;">dates</th>
 <th style="text-align: right;">count</th>
+<th style="text-align: right;">total</th>
+<th style="text-align: right;">prop</th>
+<th style="text-align: right;">months</th>
+<th style="text-align: right;">count_growth</th>
+<th style="text-align: right;">prop_growth</th>
 </tr>
 </thead>
 <tbody>
@@ -856,48 +891,1008 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">California</td>
 <td style="text-align: left;">2020-04-01</td>
 <td style="text-align: right;">39538245</td>
+<td style="text-align: right;">179266413</td>
+<td style="text-align: right;">0.2205558</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">California</td>
 <td style="text-align: left;">2021-07-01</td>
 <td style="text-align: right;">39142991</td>
+<td style="text-align: right;">179241704</td>
+<td style="text-align: right;">0.2183810</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">-26.35027</td>
+<td style="text-align: right;">-0.0144983</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">California</td>
 <td style="text-align: left;">2022-07-01</td>
 <td style="text-align: right;">39029342</td>
+<td style="text-align: right;">179936948</td>
+<td style="text-align: right;">0.2169057</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">-9.47075</td>
+<td style="text-align: right;">-0.0122949</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Texas</td>
+<td style="text-align: left;">Florida</td>
 <td style="text-align: left;">2020-04-01</td>
-<td style="text-align: right;">29145428</td>
+<td style="text-align: right;">21538226</td>
+<td style="text-align: right;">179266413</td>
+<td style="text-align: right;">0.1201465</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Texas</td>
+<td style="text-align: left;">Florida</td>
 <td style="text-align: left;">2021-07-01</td>
-<td style="text-align: right;">29558864</td>
+<td style="text-align: right;">21828069</td>
+<td style="text-align: right;">179241704</td>
+<td style="text-align: right;">0.1217801</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">19.32287</td>
+<td style="text-align: right;">0.0108908</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Texas</td>
+<td style="text-align: left;">Florida</td>
 <td style="text-align: left;">2022-07-01</td>
-<td style="text-align: right;">30029572</td>
+<td style="text-align: right;">22244823</td>
+<td style="text-align: right;">179936948</td>
+<td style="text-align: right;">0.1236257</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">34.72950</td>
+<td style="text-align: right;">0.0153798</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<section id="commented-executable-code-with-explanations-for-each-decision" class="level3">
-<h3 class="anchored" data-anchor-id="commented-executable-code-with-explanations-for-each-decision">Commented, executable code with explanations for each decision</h3>
-</section>
+<p>The raw .CSV data for data set 2 is transformed initially by cleaning the names, renaming a few columns, and removing the <code>feb_cost_k</code> and <code>march_cost_k</code> columns after recasting them into the same units as the other columns. The frame is pivoted longer and a new date column is created.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df_2 <span class="ot">&lt;-</span> csv_data_2 <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span> (<span class="at">feb_cost =</span> feb_cost_k <span class="sc">*</span><span class="dv">1000</span>,      <span class="co"># recalc cost</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">march_cost =</span> march_cost_k <span class="sc">*</span><span class="dv">1000</span>   <span class="co"># recalc cost</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">|&gt;</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(feb_cost_k, march_cost_k))      <span class="co"># remove columns</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>df_2b <span class="ot">&lt;-</span> df_2 <span class="sc">|&gt;</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>   <span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(location, name),               <span class="co"># not location nor name</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>   <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"month"</span>, <span class="st">".value"</span>),         <span class="co"># make months and cost/rev columns</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>   <span class="at">names_sep =</span> <span class="st">"_"</span>                          <span class="co"># column name separator</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>year <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="dv">2026</span>)                    <span class="co"># define year</span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>day <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="dv">1</span>)                        <span class="co"># define day</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>df_2c <span class="ot">&lt;-</span> df_2b <span class="sc">|&gt;</span></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">month_num =</span> <span class="fu">match</span>(                      <span class="co"># find month number</span></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_sub</span>(<span class="fu">str_to_lower</span>(month), <span class="dv">1</span>, <span class="dv">3</span>),   <span class="co"># use first three lower case letter</span></span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_to_lower</span>(month.abb)               <span class="co"># compare to abbreviations for months</span></span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">date =</span> <span class="fu">make_date</span>(year, month_num, day), <span class="co"># make date column</span></span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">profit =</span> revenue<span class="sc">-</span>cost,                  <span class="co"># make profit column</span></span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">ppc =</span> profit<span class="sc">/</span>cost                       <span class="co"># calc profit per cost</span></span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(date,                              <span class="co"># select needed columns</span></span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a>         name, </span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a>         location, </span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a>         cost, </span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>         revenue, </span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a>         profit, </span>
+<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a>         ppc)</span>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(df_2c))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">date</th>
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">location</th>
+<th style="text-align: right;">cost</th>
+<th style="text-align: right;">revenue</th>
+<th style="text-align: right;">profit</th>
+<th style="text-align: right;">ppc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2026-01-01</td>
+<td style="text-align: left;">Bobby</td>
+<td style="text-align: left;">Boston</td>
+<td style="text-align: right;">29000</td>
+<td style="text-align: right;">50000</td>
+<td style="text-align: right;">21000</td>
+<td style="text-align: right;">0.7241379</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2026-02-01</td>
+<td style="text-align: left;">Bobby</td>
+<td style="text-align: left;">Boston</td>
+<td style="text-align: right;">50000</td>
+<td style="text-align: right;">52000</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">0.0400000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2026-03-01</td>
+<td style="text-align: left;">Bobby</td>
+<td style="text-align: left;">Boston</td>
+<td style="text-align: right;">40000</td>
+<td style="text-align: right;">48000</td>
+<td style="text-align: right;">8000</td>
+<td style="text-align: right;">0.2000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2026-04-01</td>
+<td style="text-align: left;">Bobby</td>
+<td style="text-align: left;">Boston</td>
+<td style="text-align: right;">50000</td>
+<td style="text-align: right;">53000</td>
+<td style="text-align: right;">3000</td>
+<td style="text-align: right;">0.0600000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2026-05-01</td>
+<td style="text-align: left;">Bobby</td>
+<td style="text-align: left;">Boston</td>
+<td style="text-align: right;">25000</td>
+<td style="text-align: right;">6150000</td>
+<td style="text-align: right;">6125000</td>
+<td style="text-align: right;">245.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2026-06-01</td>
+<td style="text-align: left;">Bobby</td>
+<td style="text-align: left;">Boston</td>
+<td style="text-align: right;">45000</td>
+<td style="text-align: right;">44000</td>
+<td style="text-align: right;">-1000</td>
+<td style="text-align: right;">-0.0222222</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Upon inspection, it appears a data entry error occurred in the data for Bobby in Boston from May. The reported revenue is $6,150,000, while the cost is only $25,000. Before fixing this entry error, a check will be performed to see if any other values exceed reasonable limits.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df_2c <span class="ot">&lt;-</span> df_2c <span class="sc">|&gt;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(revenue))</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(df_2c))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">date</th>
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">location</th>
+<th style="text-align: right;">cost</th>
+<th style="text-align: right;">revenue</th>
+<th style="text-align: right;">profit</th>
+<th style="text-align: right;">ppc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2026-05-01</td>
+<td style="text-align: left;">Bobby</td>
+<td style="text-align: left;">Boston</td>
+<td style="text-align: right;">25000</td>
+<td style="text-align: right;">6150000</td>
+<td style="text-align: right;">6125000</td>
+<td style="text-align: right;">245.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2026-03-01</td>
+<td style="text-align: left;">Ethan</td>
+<td style="text-align: left;">LA</td>
+<td style="text-align: right;">60000</td>
+<td style="text-align: right;">65000</td>
+<td style="text-align: right;">5000</td>
+<td style="text-align: right;">0.0833333</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2026-04-01</td>
+<td style="text-align: left;">Ethan</td>
+<td style="text-align: left;">LA</td>
+<td style="text-align: right;">60000</td>
+<td style="text-align: right;">58000</td>
+<td style="text-align: right;">-2000</td>
+<td style="text-align: right;">-0.0333333</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2026-02-01</td>
+<td style="text-align: left;">Emma</td>
+<td style="text-align: left;">Dallas</td>
+<td style="text-align: right;">16000</td>
+<td style="text-align: right;">58000</td>
+<td style="text-align: right;">42000</td>
+<td style="text-align: right;">2.6250000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2026-06-01</td>
+<td style="text-align: left;">Ethan</td>
+<td style="text-align: left;">LA</td>
+<td style="text-align: right;">62000</td>
+<td style="text-align: right;">55000</td>
+<td style="text-align: right;">-7000</td>
+<td style="text-align: right;">-0.1129032</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2026-04-01</td>
+<td style="text-align: left;">Bobby</td>
+<td style="text-align: left;">Boston</td>
+<td style="text-align: right;">50000</td>
+<td style="text-align: right;">53000</td>
+<td style="text-align: right;">3000</td>
+<td style="text-align: right;">0.0600000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Only that single row contains misleading data. Next, the data error is fixed using an <code>if_else()</code> function to match the row to its descriptors.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>df_2c <span class="ot">&lt;-</span> df_2c <span class="sc">|&gt;</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">revenue =</span> <span class="fu">if_else</span>(              <span class="co"># replace using if logic</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>      name <span class="sc">==</span> <span class="st">"Bobby"</span> <span class="sc">&amp;</span>             <span class="co"># match name</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>        location <span class="sc">==</span> <span class="st">"Boston"</span> <span class="sc">&amp;</span>      <span class="co"># match location</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">month</span>(date) <span class="sc">==</span> <span class="dv">5</span> <span class="sc">&amp;</span>          <span class="co"># match month</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>        revenue <span class="sc">==</span> <span class="dv">6150000</span>,         <span class="co"># match revenue</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>      <span class="dv">61500</span>,                        <span class="co"># replace revenue</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>      revenue),                     <span class="co"># else:: keep same revenue </span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">profit =</span> revenue <span class="sc">-</span> cost,        <span class="co"># redefine profit</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">ppc =</span> profit <span class="sc">/</span> cost             <span class="co"># redefine ppc</span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(df_2c))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">date</th>
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">location</th>
+<th style="text-align: right;">cost</th>
+<th style="text-align: right;">revenue</th>
+<th style="text-align: right;">profit</th>
+<th style="text-align: right;">ppc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2026-05-01</td>
+<td style="text-align: left;">Bobby</td>
+<td style="text-align: left;">Boston</td>
+<td style="text-align: right;">25000</td>
+<td style="text-align: right;">61500</td>
+<td style="text-align: right;">36500</td>
+<td style="text-align: right;">1.4600000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2026-03-01</td>
+<td style="text-align: left;">Ethan</td>
+<td style="text-align: left;">LA</td>
+<td style="text-align: right;">60000</td>
+<td style="text-align: right;">65000</td>
+<td style="text-align: right;">5000</td>
+<td style="text-align: right;">0.0833333</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2026-04-01</td>
+<td style="text-align: left;">Ethan</td>
+<td style="text-align: left;">LA</td>
+<td style="text-align: right;">60000</td>
+<td style="text-align: right;">58000</td>
+<td style="text-align: right;">-2000</td>
+<td style="text-align: right;">-0.0333333</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2026-02-01</td>
+<td style="text-align: left;">Emma</td>
+<td style="text-align: left;">Dallas</td>
+<td style="text-align: right;">16000</td>
+<td style="text-align: right;">58000</td>
+<td style="text-align: right;">42000</td>
+<td style="text-align: right;">2.6250000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2026-06-01</td>
+<td style="text-align: left;">Ethan</td>
+<td style="text-align: left;">LA</td>
+<td style="text-align: right;">62000</td>
+<td style="text-align: right;">55000</td>
+<td style="text-align: right;">-7000</td>
+<td style="text-align: right;">-0.1129032</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2026-04-01</td>
+<td style="text-align: left;">Bobby</td>
+<td style="text-align: left;">Boston</td>
+<td style="text-align: right;">50000</td>
+<td style="text-align: right;">53000</td>
+<td style="text-align: right;">3000</td>
+<td style="text-align: right;">0.0600000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The raw .CSV data for data set 3 is transformed initially by removing unnecessary columns: an extra, empty column with a header containing the string “…”, and indicator code and name columns. These columns were removed because they contained redundant information. Next, the frame is pivoted longer and the names are cleaned. A new date column is created to using January 1st for each year.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>df_3 <span class="ot">&lt;-</span> csv_data_3a <span class="sc">|&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">starts_with</span>(<span class="st">"..."</span>)) <span class="sc">|&gt;</span>    <span class="co"># Remove extraneous column</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(<span class="st">"Indicator Code"</span>,       <span class="co"># Remove indicator code column</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Indicator Name"</span>))      <span class="co"># Remove indicator name column</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>df_3b <span class="ot">&lt;-</span> df_3 <span class="sc">|&gt;</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(<span class="st">"Country Name"</span>,       <span class="co"># pivot the country name</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Country Code"</span>),      <span class="co"># pivot the country code</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"Year"</span>,              <span class="co"># make new column year</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"Life Expectancy"</span>   <span class="co"># make new LE column</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()            <span class="co"># clean names</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>month_num <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="dv">1</span>)          <span class="co"># set january</span></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>df_3c <span class="ot">&lt;-</span> df_3b <span class="sc">|&gt;</span></span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">date =</span> <span class="fu">make_date</span>(year,          <span class="co"># create date </span></span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>                     month_num, </span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>                     day),</span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(df_3c))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">country_name</th>
+<th style="text-align: left;">country_code</th>
+<th style="text-align: left;">year</th>
+<th style="text-align: right;">life_expectancy</th>
+<th style="text-align: left;">date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Aruba</td>
+<td style="text-align: left;">ABW</td>
+<td style="text-align: left;">1960</td>
+<td style="text-align: right;">64.049</td>
+<td style="text-align: left;">1960-01-01</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Aruba</td>
+<td style="text-align: left;">ABW</td>
+<td style="text-align: left;">1961</td>
+<td style="text-align: right;">64.215</td>
+<td style="text-align: left;">1961-01-01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Aruba</td>
+<td style="text-align: left;">ABW</td>
+<td style="text-align: left;">1962</td>
+<td style="text-align: right;">64.602</td>
+<td style="text-align: left;">1962-01-01</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Aruba</td>
+<td style="text-align: left;">ABW</td>
+<td style="text-align: left;">1963</td>
+<td style="text-align: right;">64.944</td>
+<td style="text-align: left;">1963-01-01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Aruba</td>
+<td style="text-align: left;">ABW</td>
+<td style="text-align: left;">1964</td>
+<td style="text-align: right;">65.303</td>
+<td style="text-align: left;">1964-01-01</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Aruba</td>
+<td style="text-align: left;">ABW</td>
+<td style="text-align: left;">1965</td>
+<td style="text-align: right;">65.615</td>
+<td style="text-align: left;">1965-01-01</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Before joining data from the second .CSV file in data set 3, a data frame is formed by selecting only the necessary columns and cleaning their column names. Then, the two data frames from each of the first two .CSV files of data set 3 are joined by the country code.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>df_4 <span class="ot">&lt;-</span> csv_data_3b <span class="sc">|&gt;</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">c</span>(<span class="st">"Country Code"</span>,       <span class="co"># keep columns</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>           <span class="st">"Region"</span>, </span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>           <span class="st">"IncomeGroup"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()         <span class="co"># clean names</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>df_3d <span class="ot">&lt;-</span> df_3c <span class="sc">|&gt;</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(                    <span class="co"># join dfs</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    df_4, <span class="at">by =</span> <span class="st">"country_code"</span>   <span class="co"># by country code</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(date)                 <span class="co"># sort by date</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(df_3d))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 10%">
+<col style="width: 4%">
+<col style="width: 13%">
+<col style="width: 9%">
+<col style="width: 22%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">country_name</th>
+<th style="text-align: left;">country_code</th>
+<th style="text-align: left;">year</th>
+<th style="text-align: right;">life_expectancy</th>
+<th style="text-align: left;">date</th>
+<th style="text-align: left;">region</th>
+<th style="text-align: left;">income_group</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Aruba</td>
+<td style="text-align: left;">ABW</td>
+<td style="text-align: left;">1960</td>
+<td style="text-align: right;">64.04900</td>
+<td style="text-align: left;">1960-01-01</td>
+<td style="text-align: left;">Latin America &amp; Caribbean</td>
+<td style="text-align: left;">High income</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Africa Eastern and Southern</td>
+<td style="text-align: left;">AFE</td>
+<td style="text-align: left;">1960</td>
+<td style="text-align: right;">44.16966</td>
+<td style="text-align: left;">1960-01-01</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Afghanistan</td>
+<td style="text-align: left;">AFG</td>
+<td style="text-align: left;">1960</td>
+<td style="text-align: right;">32.79900</td>
+<td style="text-align: left;">1960-01-01</td>
+<td style="text-align: left;">Middle East &amp; North Africa</td>
+<td style="text-align: left;">Low income</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Africa Western and Central</td>
+<td style="text-align: left;">AFW</td>
+<td style="text-align: left;">1960</td>
+<td style="text-align: right;">37.77964</td>
+<td style="text-align: left;">1960-01-01</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Angola</td>
+<td style="text-align: left;">AGO</td>
+<td style="text-align: left;">1960</td>
+<td style="text-align: right;">37.93300</td>
+<td style="text-align: left;">1960-01-01</td>
+<td style="text-align: left;">Sub-Saharan Africa</td>
+<td style="text-align: left;">Lower middle income</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Albania</td>
+<td style="text-align: left;">ALB</td>
+<td style="text-align: left;">1960</td>
+<td style="text-align: right;">56.41300</td>
+<td style="text-align: left;">1960-01-01</td>
+<td style="text-align: left;">Europe &amp; Central Asia</td>
+<td style="text-align: left;">Upper middle income</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </section>
 <section id="analysis" class="level2">
 <h2 class="anchored" data-anchor-id="analysis">Analysis</h2>
-<section id="description-of-the-statistical-or-summarization-approach" class="level3">
-<h3 class="anchored" data-anchor-id="description-of-the-statistical-or-summarization-approach">Description of the statistical or summarization approach</h3>
+<section id="data-set-1-us-census-data-2022" class="level3">
+<h3 class="anchored" data-anchor-id="data-set-1-us-census-data-2022">Data set 1: US Census Data 2022</h3>
+<p>First, the data set is summarized by determining the beginning population (2020), final population (2022), net change in thousands of people, percent change, and average monthly change in thousands of people. The results are displayed in the table below:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>summary_1d <span class="ot">&lt;-</span> df_1d <span class="sc">|&gt;</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(area) <span class="sc">|&gt;</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">start_pop_2020 =</span> <span class="fu">first</span>(count),</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">end_pop_2022 =</span> <span class="fu">last</span>(count),</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">net_change_k =</span> (end_pop_2022<span class="sc">-</span>start_pop_2020)<span class="sc">/</span><span class="dv">1000</span>,</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">pct_change =</span> (net_change_k)<span class="sc">/</span>(start_pop_2020<span class="sc">/</span><span class="dv">1000</span>)<span class="sc">*</span><span class="dv">100</span>,</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_monthly_k =</span> <span class="fu">mean</span>(count_growth, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(pct_change))</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(summary_1d)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="tbl-1" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: US Top 10 States Population Growth (2020-2022)
+</figcaption>
+<div aria-describedby="tbl-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 13%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">area</th>
+<th style="text-align: right;">start_pop_2020</th>
+<th style="text-align: right;">end_pop_2022</th>
+<th style="text-align: right;">net_change_k</th>
+<th style="text-align: right;">pct_change</th>
+<th style="text-align: right;">avg_monthly_k</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Florida</td>
+<td style="text-align: right;">21538226</td>
+<td style="text-align: right;">22244823</td>
+<td style="text-align: right;">706.597</td>
+<td style="text-align: right;">3.2806648</td>
+<td style="text-align: right;">27.026183</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Texas</td>
+<td style="text-align: right;">29145428</td>
+<td style="text-align: right;">30029572</td>
+<td style="text-align: right;">884.144</td>
+<td style="text-align: right;">3.0335598</td>
+<td style="text-align: right;">33.394033</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">North Carolina</td>
+<td style="text-align: right;">10439414</td>
+<td style="text-align: right;">10698973</td>
+<td style="text-align: right;">259.559</td>
+<td style="text-align: right;">2.4863369</td>
+<td style="text-align: right;">9.761033</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Georgia</td>
+<td style="text-align: right;">10711937</td>
+<td style="text-align: right;">10912876</td>
+<td style="text-align: right;">200.939</td>
+<td style="text-align: right;">1.8758419</td>
+<td style="text-align: right;">7.738358</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pennsylvania</td>
+<td style="text-align: right;">13002689</td>
+<td style="text-align: right;">12972008</td>
+<td style="text-align: right;">-30.681</td>
+<td style="text-align: right;">-0.2359589</td>
+<td style="text-align: right;">-1.356458</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ohio</td>
+<td style="text-align: right;">11799374</td>
+<td style="text-align: right;">11756058</td>
+<td style="text-align: right;">-43.316</td>
+<td style="text-align: right;">-0.3671042</td>
+<td style="text-align: right;">-1.512900</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Michigan</td>
+<td style="text-align: right;">10077325</td>
+<td style="text-align: right;">10034113</td>
+<td style="text-align: right;">-43.212</td>
+<td style="text-align: right;">-0.4288043</td>
+<td style="text-align: right;">-1.468658</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">California</td>
+<td style="text-align: right;">39538245</td>
+<td style="text-align: right;">39029342</td>
+<td style="text-align: right;">-508.903</td>
+<td style="text-align: right;">-1.2871158</td>
+<td style="text-align: right;">-17.910508</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Illinois</td>
+<td style="text-align: right;">12812545</td>
+<td style="text-align: right;">12582032</td>
+<td style="text-align: right;">-230.513</td>
+<td style="text-align: right;">-1.7991195</td>
+<td style="text-align: right;">-8.554075</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">New York</td>
+<td style="text-align: right;">20201230</td>
+<td style="text-align: right;">19677151</td>
+<td style="text-align: right;">-524.079</td>
+<td style="text-align: right;">-2.5942925</td>
+<td style="text-align: right;">-18.972142</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>The US Census data is visualized in two plots, each showing the population change over the multi-year collection process. In the first, the total net population in thousands of people is shown.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>summary_1d <span class="sc">|&gt;</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(area, net_change_k), <span class="at">y =</span> net_change_k, <span class="at">fill =</span> net_change_k <span class="sc">&gt;</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_standard</span>() <span class="sc">+</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Net Population Change (April 2020 - July 2022)"</span>,</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"top 10 US states by population"</span>,</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"State"</span>,</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Net Population Change (Thousands)"</span>) <span class="sc">+</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Project2-KCH-Codebase_files/figure-html/fig-1-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Net Population Change (April 2020 - July 2022)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In the second, the percent population change of each of the top 10 US states is shown.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>summary_1d <span class="sc">|&gt;</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(area, pct_change), <span class="at">y =</span> pct_change, <span class="at">fill =</span> net_change_k <span class="sc">&gt;</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_standard</span>() <span class="sc">+</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Population Shift (April 2020 - July 2022)"</span>,</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"top 10 US states by population"</span>,</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"State"</span>,</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Percent Population Change (vs. April 2020)"</span>) <span class="sc">+</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Project2-KCH-Codebase_files/figure-html/fig-2-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Population Shift (April 2020 - July 2022)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="data-set-2-2026-business-performance" class="level3">
+<h3 class="anchored" data-anchor-id="data-set-2-2026-business-performance">Data set 2: 2026 Business Performance</h3>
+<p>Business data is analyzed to determine total revenue, cost, and profit figures, as well as average profit per cost rates. The summary of this data is provided below:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>summary_2c <span class="ot">&lt;-</span> df_2c <span class="sc">|&gt;</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(name, location) <span class="sc">|&gt;</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_revenue =</span> <span class="fu">sum</span>(revenue),</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_cost =</span> <span class="fu">sum</span>(cost),</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_profit =</span> <span class="fu">sum</span>(profit),</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_ppc =</span> <span class="fu">mean</span>(ppc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_profit))</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(summary_2c)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="tbl-2" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: 2026 Business Performance Summary
+</figcaption>
+<div aria-describedby="tbl-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">location</th>
+<th style="text-align: right;">total_revenue</th>
+<th style="text-align: right;">total_cost</th>
+<th style="text-align: right;">total_profit</th>
+<th style="text-align: right;">avg_ppc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Bobby</td>
+<td style="text-align: left;">Boston</td>
+<td style="text-align: right;">308500</td>
+<td style="text-align: right;">239000</td>
+<td style="text-align: right;">69500</td>
+<td style="text-align: right;">0.4103193</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Emma</td>
+<td style="text-align: left;">Dallas</td>
+<td style="text-align: right;">230000</td>
+<td style="text-align: right;">164000</td>
+<td style="text-align: right;">66000</td>
+<td style="text-align: right;">0.6031365</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">April</td>
+<td style="text-align: left;">New York</td>
+<td style="text-align: right;">196000</td>
+<td style="text-align: right;">165000</td>
+<td style="text-align: right;">31000</td>
+<td style="text-align: right;">0.2301568</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ethan</td>
+<td style="text-align: left;">LA</td>
+<td style="text-align: right;">292000</td>
+<td style="text-align: right;">279500</td>
+<td style="text-align: right;">12500</td>
+<td style="text-align: right;">0.0782283</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Denise</td>
+<td style="text-align: left;">Chicago</td>
+<td style="text-align: right;">221000</td>
+<td style="text-align: right;">213600</td>
+<td style="text-align: right;">7400</td>
+<td style="text-align: right;">0.3359564</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>The monthly profit for each representative is visualized.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>df_2c <span class="sc">|&gt;</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>date, <span class="at">y=</span>profit, <span class="at">color =</span> name)) <span class="sc">+</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Monthly Profit Trajectory by Representative (2026)"</span>,</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Date"</span>,</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Net Profit ($)"</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_standard</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Project2-KCH-Codebase_files/figure-html/fig-3-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Monthly Profit Trajectory by Representative (2026)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="data-set-3-world-bank-life-expectancy" class="level3">
+<h3 class="anchored" data-anchor-id="data-set-3-world-bank-life-expectancy">Data set 3: World Bank Life Expectancy</h3>
+<p>First, this data set is aggregated by region before summarizing, so rows without region or life expectancy observations are initially filtered out. The resulting data frame is then summarized by the mean of the life expectancy values for each region. The summary is displayed below:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>region_summary_3d <span class="ot">&lt;-</span> df_3d <span class="sc">|&gt;</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(region), <span class="sc">!</span><span class="fu">is.na</span>(life_expectancy)) <span class="sc">|&gt;</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region, date) <span class="sc">|&gt;</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_le =</span> <span class="fu">mean</span>(life_expectancy)</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(date))</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(region_summary_3d,<span class="dv">7</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="tbl-3" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: Average Life Expectancy
+</figcaption>
+<div aria-describedby="tbl-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">region</th>
+<th style="text-align: left;">date</th>
+<th style="text-align: right;">mean_le</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">East Asia &amp; Pacific</td>
+<td style="text-align: left;">2024-01-01</td>
+<td style="text-align: right;">74.11466</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Europe &amp; Central Asia</td>
+<td style="text-align: left;">2024-01-01</td>
+<td style="text-align: right;">79.26316</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Latin America &amp; Caribbean</td>
+<td style="text-align: left;">2024-01-01</td>
+<td style="text-align: right;">75.54316</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Middle East &amp; North Africa</td>
+<td style="text-align: left;">2024-01-01</td>
+<td style="text-align: right;">75.92557</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">North America</td>
+<td style="text-align: left;">2024-01-01</td>
+<td style="text-align: right;">81.16276</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Asia</td>
+<td style="text-align: left;">2024-01-01</td>
+<td style="text-align: right;">75.00333</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sub-Saharan Africa</td>
+<td style="text-align: left;">2024-01-01</td>
+<td style="text-align: right;">64.77800</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>The first visualization shows the life expectancy trajectory for each World Bank region between 1960 and 2024.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>region_summary_3d <span class="sc">|&gt;</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> date, </span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> mean_le, </span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> region)) <span class="sc">+</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_standard</span>() <span class="sc">+</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Life Expectancy Trajectories by Global Region"</span>,</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"1960-2024"</span>,</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Year"</span>,</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Mean Life Expectancy (years)"</span>,</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"World Bank Region"</span></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-4" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Project2-KCH-Codebase_files/figure-html/fig-4-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Life Expectancy Trajectories by Global Region
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>A second visualization reveals the disparity in life expectancy by income group using a box-plot:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>last_year <span class="ot">=</span> <span class="fu">max</span>(region_summary_3d<span class="sc">$</span>date)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>country_df <span class="ot">&lt;-</span> df_3d <span class="sc">|&gt;</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(region), </span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(life_expectancy)) <span class="sc">|&gt;</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">==</span> last_year, </span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(income_group))</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>country_df <span class="sc">|&gt;</span></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(income_group, </span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>                         life_expectancy, </span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">FUN =</span> median), </span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> life_expectancy, </span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> income_group)) <span class="sc">+</span></span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_standard</span>() <span class="sc">+</span></span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Global Life Expectancy Disparity by Income Group"</span>,</span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">year</span>(last_year),</span>
+<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Income Group"</span>,</span>
+<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Life Expectancy at Birth (years)"</span></span>
+<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-5" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Project2-KCH-Codebase_files/figure-html/fig-5-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Global Life Expectancy Disparity by Income Group
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
 </section>
-<section id="conclusions" class="level2">
-<h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
+<section id="findings-and-recommendations" class="level2">
+<h2 class="anchored" data-anchor-id="findings-and-recommendations">Findings and Recommendations</h2>
+<section id="data-set-1-us-census" class="level3">
+<h3 class="anchored" data-anchor-id="data-set-1-us-census">Data set 1 (US Census)</h3>
+<p>The US Census data from 2020-2022 shows clear interstate migration patterns. States like Texas and Florida saw monthly influxes exceeding 25,000 people. With population changes of over 700,000 net people (<a href="#tbl-1" class="quarto-xref">Table&nbsp;1</a> ), Florida and Texas also show the greatest net postive percentage changes of over 3.0%, respectively (<a href="#fig-2" class="quarto-xref">Figure&nbsp;2</a>). Meanwhile, states like California, New York, and Illinois experienced net exoduses over the same period: California and New York each exceeded a net loss of over one half million people during this time frame (<a href="#fig-1" class="quarto-xref">Figure&nbsp;1</a>), while New York exhibited the greatest percentage loss of over 2.5% from 2020 (<a href="#fig-2" class="quarto-xref">Figure&nbsp;2</a>).</p>
+<p>This project could be expanded in the future to by incorporating more historical data (e.g.&nbsp;census data from before 2020). Aggregate population growth rates could be compared to stratified data by state.</p>
+</section>
+<section id="data-set-2-2026-business-performance-1" class="level3">
+<h3 class="anchored" data-anchor-id="data-set-2-2026-business-performance-1">Data set 2 (2026 Business Performance)</h3>
+<p>The business data encountered in data set 2 required cleaning, tidying, and dealing with erroneous observations. After correcting for a data entry error, performance for each representative is visualized. While Bobby in Boston earned the highest total revenue and greatest profit (<a href="#tbl-2" class="quarto-xref">Table&nbsp;2</a>), Emma in Dallas was the most efficient representative, with a profit per cost ratio of 0.60. Heading into June 2026, the trajectory plot shows only one representative with a positive profit momentum, Denise (<a href="#fig-3" class="quarto-xref">Figure&nbsp;3</a>). Conversely, the representative with the greatest negative momentum is Bobby, who had a high profit month in May.</p>
+<p>Future work could investigate data validation at the site of data entry to obviate errors like Bobby from Boston’s $6M revenue month. Additionally, this project naturally expands as reporting from new moths is added to the set. Lastly, the data could be aggregated by quarter and compared year-to-year to observe macro trends.</p>
+</section>
+<section id="data-set-3-world-bank-life-expectancy-1" class="level3">
+<h3 class="anchored" data-anchor-id="data-set-3-world-bank-life-expectancy-1">Data set 3 (World Bank Life Expectancy</h3>
+<p>Global life expectancy has increased dramatically in the over six decades since 1960. Each World Bank Region has demonstrated clear aggregate progress in elevating life expectancy (<a href="#fig-4" class="quarto-xref">Figure&nbsp;4</a>). Notably, all World Bank regions experienced a regression in the immediate period following 2020. This illustrates the global impact of the COVID-19 pandemic of 2020. Summarizing this information reveals that the region with the highest 2024 life expectancy at birth is North America at 81.2 years, and the region with the lowest 2024 life expectancy at birth is Sub-Saharan Africa at 64.8 years ( <a href="#tbl-3" class="quarto-xref">Table&nbsp;3</a>). The disparity in life expectancy by income group shows a clear relationship between income level and life expectancy: as income increases, so does life expectancy (<a href="#fig-4" class="quarto-xref">Figure&nbsp;4</a>).</p>
+<p>Extending this work by dis-aggregating regions into subsidiary countries could reveal interesting intra-regional trends (e.g.&nbsp;northern countries in Sub-Saharan Africa display higher life expectancy growth rates than southern countries). Additionally, new indicators such as median income or per capita gross domestic product could be joined into the data set to make comparisons between income and life expectancy more numerical.</p>
+</section>
 </section>
 </section>
 

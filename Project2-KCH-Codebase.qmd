@@ -436,6 +436,8 @@ First, the data set is summarized by determining the beginning population (2020)
 #| echo: true
 #| warning: false
 #| message: false
+#| label: tbl-1
+#| tbl-cap: "US Top 10 States Population Growth (2020-2022)"
 
 summary_1d <- df_1d |>
   group_by(area) |>
@@ -448,7 +450,7 @@ summary_1d <- df_1d |>
   ) |>
   arrange(desc(pct_change))
 
-knitr::kable(summary_1d, caption = "US Top 10 States Population Growth (2020-2022)")
+knitr::kable(summary_1d)
 ```
 
 ```{r setting-plot-theme}
@@ -520,6 +522,8 @@ Business data is analyzed to determine total revenue, cost, and profit figures, 
 #| echo: true
 #| warning: false
 #| message: false
+#| label: tbl-2
+#| tbl-cap: "2026 Business Performance Summary"
 
 summary_2c <- df_2c |>
   group_by(name, location) |>
@@ -532,7 +536,7 @@ summary_2c <- df_2c |>
   ungroup() |>
   arrange(desc(total_profit))
 
-knitr::kable(summary_2c, caption = "2026 Business Performance Summary")
+knitr::kable(summary_2c)
 
 ```
 
@@ -565,6 +569,8 @@ First, this data set is aggregated by region before summarizing, so rows without
 #| echo: true
 #| warning: false
 #| message: false
+#| label: tbl-3
+#| tbl-cap: "Average Life Expectancy"
 
 region_summary_3d <- df_3d |>
   filter(!is.na(region), !is.na(life_expectancy)) |>
@@ -575,7 +581,7 @@ region_summary_3d <- df_3d |>
   ungroup() |>
   arrange(desc(date))
 
-knitr::kable(head(region_summary_3d,7), caption = "Average Life Expectancy")
+knitr::kable(head(region_summary_3d,7))
 ```
 
 The first visualization shows the life expectancy trajectory for each World Bank region between 1960 and 2024.
@@ -636,6 +642,22 @@ country_df |>
   coord_flip()
 ```
 
-## Conclusions
+## Findings and Recommendations
 
-### Data set 1
+### Data set 1 (US Census)
+
+The US Census data from 2020-2022 shows clear interstate migration patterns. States like Texas and Florida saw monthly influxes exceeding 25,000 people. With population changes of over 700,000 net people (@tbl-1 ), Florida and Texas also show the greatest net postive percentage changes of over 3.0%, respectively (@fig-2). Meanwhile, states like California, New York, and Illinois experienced net exoduses over the same period: California and New York each exceeded a net loss of over one half million people during this time frame (@fig-1), while New York exhibited the greatest percentage loss of over 2.5% from 2020 (@fig-2).
+
+This project could be expanded in the future to by incorporating more historical data (e.g. census data from before 2020). Aggregate population growth rates could be compared to stratified data by state.
+
+### Data set 2 (2026 Business Performance)
+
+The business data encountered in data set 2 required cleaning, tidying, and dealing with erroneous observations. After correcting for a data entry error, performance for each representative is visualized. While Bobby in Boston earned the highest total revenue and greatest profit (@tbl-2), Emma in Dallas was the most efficient representative, with a profit per cost ratio of 0.60. Heading into June 2026, the trajectory plot shows only one representative with a positive profit momentum, Denise (@fig-3). Conversely, the representative with the greatest negative momentum is Bobby, who had a high profit month in May.
+
+Future work could investigate data validation at the site of data entry to obviate errors like Bobby from Boston's \$6M revenue month. Additionally, this project naturally expands as reporting from new moths is added to the set. Lastly, the data could be aggregated by quarter and compared year-to-year to observe macro trends.
+
+### Data set 3 (World Bank Life Expectancy
+
+Global life expectancy has increased dramatically in the over six decades since 1960. Each World Bank Region has demonstrated clear aggregate progress in elevating life expectancy (@fig-4). Notably, all World Bank regions experienced a regression in the immediate period following 2020. This illustrates the global impact of the COVID-19 pandemic of 2020. Summarizing this information reveals that the region with the highest 2024 life expectancy at birth is North America at 81.2 years, and the region with the lowest 2024 life expectancy at birth is Sub-Saharan Africa at 64.8 years ( @tbl-3). The disparity in life expectancy by income group shows a clear relationship between income level and life expectancy: as income increases, so does life expectancy (@fig-4).
+
+Extending this work by dis-aggregating regions into subsidiary countries could reveal interesting intra-regional trends (e.g. northern countries in Sub-Saharan Africa display higher life expectancy growth rates than southern countries). Additionally, new indicators such as median income or per capita gross domestic product could be joined into the data set to make comparisons between income and life expectancy more numerical.
